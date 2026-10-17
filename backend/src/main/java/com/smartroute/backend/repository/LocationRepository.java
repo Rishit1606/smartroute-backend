@@ -30,4 +30,25 @@ public class LocationRepository {
                 rs.getDouble("latitude"),
                 rs.getDouble("longitude")));
     }
+
+    //
+    public Location findById(int id) {
+        String sql = """
+                SELECT id, name, latitude, longitude
+                FROM public.locations
+                WHERE id = ?
+                """;
+
+        List<Location> results = jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> new Location(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("latitude"),
+                        rs.getDouble("longitude")),
+                id);
+
+        return results.isEmpty() ? null : results.get(0);
+    }
+
 }

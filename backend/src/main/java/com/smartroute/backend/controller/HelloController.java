@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.smartroute.backend.model.Location;
 import com.smartroute.backend.service.LocationService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController // This java class will handle http requests Spring, please treat this class as
                 // a web/API controller.
@@ -42,5 +45,18 @@ public class HelloController {
     @GetMapping("/api/locations")
     public List<Location> getLocations() {
         return locationService.getAllLocations();
+    }
+
+    @GetMapping("/api/locations/{id}")
+    public Location getLocationById(@PathVariable int id) {
+        Location location = locationService.getLocationById(id);
+
+        if (location == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Location not found");
+        }
+
+        return location;
     }
 }
