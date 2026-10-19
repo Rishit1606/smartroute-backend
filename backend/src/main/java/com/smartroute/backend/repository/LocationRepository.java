@@ -89,4 +89,14 @@ public class LocationRepository {
 
     }
 
+    public int update(int id, String name, double latitude, double longitude) {
+        String sql = """
+                UPDATE public.locations
+                SET name = ?, latitude = ?, longitude = ?
+                WHERE id = ?
+                """;
+
+        return jdbcTemplate.update(sql, name, latitude, longitude, id);
+    }
+
 }

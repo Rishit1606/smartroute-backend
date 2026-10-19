@@ -25,4 +25,13 @@ public class LocationService {
         return locationRepository.insert(name, latitude, longitude);
     }
 
+    public boolean updateLocation(
+            int id, String name, double latitude, double longitude) {
+
+        int rowsUpdated = locationRepository.update(
+                id, name, latitude, longitude);
+
+        return rowsUpdated > 0;
+    }
+
 }

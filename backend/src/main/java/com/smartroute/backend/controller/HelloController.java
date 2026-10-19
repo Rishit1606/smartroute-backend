@@ -15,6 +15,7 @@ import com.smartroute.backend.dto.LocationRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController // This java class will handle http requests Spring, please treat this class as
                 // a web/API controller.
@@ -75,5 +76,23 @@ public class HelloController {
                 request.getLongitude());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    }
+
+    @PutMapping("/api/locations/{id}")
+    public ResponseEntity<Void> updateLocation(
+            @PathVariable int id,
+            @Valid @RequestBody LocationRequest request) {
+
+        boolean updated = locationService.updateLocation(
+                id,
+                request.getName(),
+                request.getLatitude(),
+                request.getLongitude());
+
+        if (!updated) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
