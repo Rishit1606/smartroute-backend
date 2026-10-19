@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController // This java class will handle http requests Spring, please treat this class as
                 // a web/API controller.
@@ -94,5 +95,16 @@ public class HelloController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("api/locations/{id}")
+    public ResponseEntity<Void> deleteLocation(@PathVariable int id) {
+        boolean deleted = locationService.deleteLocation(id);
+
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }

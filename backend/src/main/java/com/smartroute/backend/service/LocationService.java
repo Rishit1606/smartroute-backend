@@ -34,4 +34,9 @@ public class LocationService {
         return rowsUpdated > 0;
     }
 
+    public boolean deleteLocation(int id) {
+        int rowsDeleted = locationRepository.deleteById(id);
+        return rowsDeleted > 0;
+    }
+
 }

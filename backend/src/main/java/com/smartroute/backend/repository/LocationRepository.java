@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -97,6 +96,15 @@ public class LocationRepository {
                 """;
 
         return jdbcTemplate.update(sql, name, latitude, longitude, id);
+    }
+
+    public int deleteById(int id) {
+        String sql = """
+                DELETE FROM public.locations
+                WHERE id = ?
+                """;
+
+        return jdbcTemplate.update(sql, id);
     }
 
 }
