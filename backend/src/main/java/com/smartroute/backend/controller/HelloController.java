@@ -8,8 +8,13 @@ import com.smartroute.backend.model.Location;
 import com.smartroute.backend.service.LocationService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
+import com.smartroute.backend.dto.LocationRequest;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController // This java class will handle http requests Spring, please treat this class as
                 // a web/API controller.
@@ -58,5 +63,17 @@ public class HelloController {
         }
 
         return location;
+    }
+
+    @PostMapping("/api/locations")
+    public ResponseEntity<Integer> createLocation(
+            @Valid @RequestBody LocationRequest request) {
+
+        int id = locationService.createLocation(
+                request.getName(),
+                request.getLatitude(),
+                request.getLongitude());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 }

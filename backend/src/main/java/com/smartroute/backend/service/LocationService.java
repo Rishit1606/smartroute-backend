@@ -21,4 +21,8 @@ public class LocationService {
         return locationRepository.findById(id);
     }
 
+    public int createLocation(String name, double latitude, double longitude) {
+        return locationRepository.insert(name, latitude, longitude);
+    }
+
 }
