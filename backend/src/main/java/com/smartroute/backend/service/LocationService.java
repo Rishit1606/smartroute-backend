@@ -1,5 +1,6 @@
 package com.smartroute.backend.service;
 
+import com.smartroute.backend.model.LocationType;
 import com.smartroute.backend.model.Location;
 import com.smartroute.backend.repository.LocationRepository;
 import java.util.List;
@@ -21,15 +22,15 @@ public class LocationService {
         return locationRepository.findById(id);
     }
 
-    public int createLocation(String name, double latitude, double longitude) {
-        return locationRepository.insert(name, latitude, longitude);
+    public int createLocation(String name, double latitude, double longitude, LocationType locationType) {
+        return locationRepository.insert(name, latitude, longitude, locationType);
     }
 
     public boolean updateLocation(
-            int id, String name, double latitude, double longitude) {
+            int id, String name, double latitude, double longitude, LocationType locationType) {
 
         int rowsUpdated = locationRepository.update(
-                id, name, latitude, longitude);
+                id, name, latitude, longitude, locationType);
 
         return rowsUpdated > 0;
     }

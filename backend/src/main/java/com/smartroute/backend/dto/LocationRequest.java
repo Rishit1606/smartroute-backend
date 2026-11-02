@@ -1,5 +1,6 @@
 package com.smartroute.backend.dto;
 
+import com.smartroute.backend.model.LocationType;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +20,9 @@ public class LocationRequest {
     @DecimalMax("180.0")
     private Double longitude;
 
+    @NotNull
+    private LocationType locationType;
+
     public LocationRequest() {
     }
 
@@ -32,6 +36,10 @@ public class LocationRequest {
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public LocationType getLocationType() {
+        return locationType;
     }
 
 }

@@ -74,7 +74,8 @@ public class HelloController {
         int id = locationService.createLocation(
                 request.getName(),
                 request.getLatitude(),
-                request.getLongitude());
+                request.getLongitude(),
+                request.getLocationType());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
@@ -88,7 +89,8 @@ public class HelloController {
                 id,
                 request.getName(),
                 request.getLatitude(),
-                request.getLongitude());
+                request.getLongitude(),
+                request.getLocationType());
 
         if (!updated) {
             return ResponseEntity.notFound().build();
@@ -97,7 +99,7 @@ public class HelloController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("api/locations/{id}")
+    @DeleteMapping("/api/locations/{id}")
     public ResponseEntity<Void> deleteLocation(@PathVariable int id) {
         boolean deleted = locationService.deleteLocation(id);
 

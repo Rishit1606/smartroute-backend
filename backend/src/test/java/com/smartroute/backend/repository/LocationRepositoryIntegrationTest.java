@@ -2,6 +2,8 @@
 package com.smartroute.backend.repository;
 
 import com.smartroute.backend.model.Location;
+import com.smartroute.backend.model.LocationType;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +24,7 @@ class LocationRepositoryIntegrationTest {
         void findAllReturnsInsertedLocation() {
                 String name = "Integration Test Station";
 
-                int id = locationRepository.insert(name, 33.42, -111.94);
+                int id = locationRepository.insert(name, 33.42, -111.94, LocationType.STATION);
 
                 List<Location> locations = locationRepository.findAll();
 
@@ -34,7 +36,7 @@ class LocationRepositoryIntegrationTest {
         @Test
         void findByIdReturnsCorrectLocation() {
                 int id = locationRepository.insert(
-                                "Find Test Station", 33.43, -111.95);
+                                "Find Test Station", 33.43, -111.95, LocationType.STATION);
 
                 Location result = locationRepository.findById(id);
 
@@ -47,7 +49,7 @@ class LocationRepositoryIntegrationTest {
         @Test
         void insertCreatesLocationWithGeneratedId() {
                 int id = locationRepository.insert(
-                                "Insert Test Station", 33.44, -111.96);
+                                "Insert Test Station", 33.44, -111.96, LocationType.STATION);
 
                 assertTrue(id > 0);
 
@@ -60,10 +62,10 @@ class LocationRepositoryIntegrationTest {
         @Test
         void updateChangesExistingLocation() {
                 int id = locationRepository.insert(
-                                "Before Update", 33.42, -111.94);
+                                "Before Update", 33.42, -111.94, LocationType.STATION);
 
                 int rowsUpdated = locationRepository.update(
-                                id, "After Update", 33.45, -111.97);
+                                id, "After Update", 33.45, -111.97, LocationType.STATION);
 
                 Location result = locationRepository.findById(id);
 
@@ -77,7 +79,7 @@ class LocationRepositoryIntegrationTest {
         @Test
         void deleteRemovesInsertedLocation() {
                 int id = locationRepository.insert(
-                                "Delete Test Station", 33.42, -111.94);
+                                "Delete Test Station", 33.42, -111.94, LocationType.STATION);
 
                 int rowsDeleted = locationRepository.deleteById(id);
 

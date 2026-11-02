@@ -1,6 +1,7 @@
 
 package com.smartroute.backend.repository;
 
+import com.smartroute.backend.model.LocationType;
 import com.smartroute.backend.model.Location;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +23,7 @@ public class LocationRepository {
     // Selects every row from public.locations
     public List<Location> findAll() {
         String sql = """
-                SELECT id, name, latitude, longitude
+                SELECT id, name, latitude, longitude, location_type
                 FROM public.locations
                 ORDER BY id
                 """;
@@ -31,13 +32,14 @@ public class LocationRepository {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getDouble("latitude"),
-                rs.getDouble("longitude")));
+                rs.getDouble("longitude"),
+                LocationType.valueOf(rs.getString("location_type"))));
     }
 
     //
     public Location findById(int id) {
         String sql = """
-                SELECT id, name, latitude, longitude
+                SELECT id, name, latitude, longitude, location_type
                 FROM public.locations
                 WHERE id = ?
                 """;
@@ -48,7 +50,8 @@ public class LocationRepository {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("latitude"),
-                        rs.getDouble("longitude")),
+                        rs.getDouble("longitude"),
+                        LocationType.valueOf(rs.getString("location_type"))),
                 id); // suplies value in "?""
 
         if (results.isEmpty()) {
@@ -58,10 +61,10 @@ public class LocationRepository {
         }
     }
 
-    public int insert(String name, double latitude, double longitude) {
+    public int insert(String name, double latitude, double longitude, LocationType locationType) {
         String sql = """
-                INSERT INTO public.locations (name, latitude, longitude)
-                VALUES (?, ?, ?)
+                INSERT INTO public.locations (name, latitude, longitude, location_type)
+                VALUES (?, ?, ?, ?)
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -74,6 +77,7 @@ public class LocationRepository {
             statement.setString(1, name);
             statement.setDouble(2, latitude);
             statement.setDouble(3, longitude);
+            statement.setString(4, locationType.name());
 
             return statement;
         }, keyHolder);
@@ -88,14 +92,14 @@ public class LocationRepository {
 
     }
 
-    public int update(int id, String name, double latitude, double longitude) {
+    public int update(int id, String name, double latitude, double longitude, LocationType locationType) {
         String sql = """
                 UPDATE public.locations
-                SET name = ?, latitude = ?, longitude = ?
+                SET name = ?, latitude = ?, longitude = ?, location_type = ?
                 WHERE id = ?
                 """;
 
-        return jdbcTemplate.update(sql, name, latitude, longitude, id);
+        return jdbcTemplate.update(sql, name, latitude, longitude, locationType.name(), id);
     }
 
     public int deleteById(int id) {

@@ -2,6 +2,7 @@
 package com.smartroute.backend;
 
 import com.smartroute.backend.model.Location;
+import com.smartroute.backend.model.LocationType;
 import com.smartroute.backend.repository.LocationRepository;
 import com.smartroute.backend.service.LocationService;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class LocationServiceTest {
     @Test
     void getLocationByIdReturnsLocation() {
         Location sample = new Location(
-                1, "Test Station", 33.42, -111.94);
+                1, "Test Station", 33.42, -111.94, LocationType.STATION);
 
         when(locationRepository.findById(1)).thenReturn(sample);
 
@@ -41,8 +42,8 @@ class LocationServiceTest {
     @Test
     void getAllLocationsReturnsLocations() {
         List<Location> sampleLocations = List.of(
-                new Location(1, "Station A", 33.42, -111.94),
-                new Location(2, "Station B", 33.43, -111.95));
+                new Location(1, "Station A", 33.42, -111.94, LocationType.STATION),
+                new Location(2, "Station B", 33.43, -111.95, LocationType.STATION));
 
         when(locationRepository.findAll()).thenReturn(sampleLocations);
 
