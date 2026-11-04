@@ -1,7 +1,7 @@
 
 package com.smartroute.backend;
 
-import com.smartroute.backend.controller.HelloController;
+import com.smartroute.backend.controller.LocationController;
 import com.smartroute.backend.model.Location;
 import com.smartroute.backend.model.LocationType;
 import com.smartroute.backend.service.DatabaseService;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
-@WebMvcTest(HelloController.class)
+@WebMvcTest(LocationController.class)
 class LocationControllerTest {
 
         @Autowired
@@ -69,7 +69,7 @@ class LocationControllerTest {
 
         @Test
         void createLocationReturnsCreated() throws Exception {
-                when(locationService.createLocation("Station B", 33.43, -111.95, LocationType.AIRPORT))
+                when(locationService.createLocation("Station B", 33.43, -111.95, LocationType.STATION))
                                 .thenReturn(2);
 
                 mockMvc.perform(post("/api/locations")
@@ -79,7 +79,7 @@ class LocationControllerTest {
                                                     "name": "Station B",
                                                     "latitude": 33.43,
                                                     "longitude": -111.95,
-                                                    "locationType": "AIRPORT"
+                                                    "locationType": "STATION"
                                                 }
                                                 """))
                                 .andExpect(status().isCreated())
