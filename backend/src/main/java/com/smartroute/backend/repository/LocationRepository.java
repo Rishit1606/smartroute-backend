@@ -36,6 +36,23 @@ public class LocationRepository {
                 LocationType.valueOf(rs.getString("location_type"))));
     }
 
+    public List<Location> findByType(LocationType locationType) {
+        String sql = """
+                SELECT *
+                FROM locations
+                WHERE location_type = ?
+                ORDER BY id
+                """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Location(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getDouble("latitude"),
+                rs.getDouble("longitude"),
+                LocationType.valueOf(rs.getString("location_type"))),
+                locationType.name());
+    }
+
     //
     public Location findById(int id) {
         String sql = """

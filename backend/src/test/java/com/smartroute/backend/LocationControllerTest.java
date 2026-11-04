@@ -69,7 +69,7 @@ class LocationControllerTest {
 
         @Test
         void createLocationReturnsCreated() throws Exception {
-                when(locationService.createLocation("Station B", 33.43, -111.95, LocationType.STATION))
+                when(locationService.createLocation("Station B", 33.43, -111.95, LocationType.AIRPORT))
                                 .thenReturn(2);
 
                 mockMvc.perform(post("/api/locations")
@@ -79,7 +79,7 @@ class LocationControllerTest {
                                                     "name": "Station B",
                                                     "latitude": 33.43,
                                                     "longitude": -111.95,
-                                                    "locationType": "STATION"
+                                                    "locationType": "AIRPORT"
                                                 }
                                                 """))
                                 .andExpect(status().isCreated())

@@ -5,6 +5,7 @@ import com.smartroute.backend.service.RouteService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.smartroute.backend.model.Location;
+import com.smartroute.backend.model.LocationType;
 import com.smartroute.backend.service.LocationService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -108,5 +109,12 @@ public class HelloController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/locations/type/{locationType}")
+    public List<Location> getLocationsByType(
+            @PathVariable LocationType locationType) {
+
+        return locationService.getLocationsByType(locationType);
     }
 }

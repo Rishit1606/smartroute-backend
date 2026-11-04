@@ -40,4 +40,9 @@ public class LocationService {
         return rowsDeleted > 0;
     }
 
+    public List<Location> getLocationsByType(LocationType locationType) {
+
+        return locationRepository.findByType(locationType);
+    }
+
 }
